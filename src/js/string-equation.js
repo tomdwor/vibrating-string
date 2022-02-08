@@ -6,7 +6,7 @@ export class StringEquation {
     this.endX = f[f.length - 1].x;
     this.pointsNumb = this.f.length;
     this.deltaX = this.endX / (this.pointsNumb - 1);
-    this._initEulerDifferentialNet();
+    this._initEulerianMesh();
   }
 
   _getInitialE () {
@@ -29,16 +29,16 @@ export class StringEquation {
     return func;
   }
 
-  _initEulerDifferentialNet () {
-    this.eulerDifferentialNet = {
+  _initEulerianMesh () {
+    this.eulerianMesh = {
       'e': this._getInitialE(),
       'u': this._getYValuesOfPoints(this.f),
     };
   }
 
   _calculateNextStep () {
-    let currentE = this.eulerDifferentialNet['e'];
-    let currentU = this.eulerDifferentialNet['u'];
+    let currentE = this.eulerianMesh['e'];
+    let currentU = this.eulerianMesh['u'];
     let nextE = [];
     let nextU = [];
 
@@ -56,7 +56,7 @@ export class StringEquation {
       nextU[i] = currentU[i] + nextE[i] * this.deltaT;
     }
 
-    this.eulerDifferentialNet = {
+    this.eulerianMesh = {
       'e': nextE,
       'u': nextU,
     };
@@ -64,6 +64,6 @@ export class StringEquation {
 
   getNextU () {
     this._calculateNextStep();
-    return this._makeFunctionPointsFromYValues(this.eulerDifferentialNet['u']);
+    return this._makeFunctionPointsFromYValues(this.eulerianMesh['u']);
   }
 }
