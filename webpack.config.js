@@ -40,7 +40,6 @@ module.exports = {
             template: "./src/index.html",
             favicon: "./src/favicon.png",
             inject : "body",
-            scriptLoading: "blocking",
         })
     ]
 };

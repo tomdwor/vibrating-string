@@ -5,7 +5,7 @@ import {StringEquation} from './string-equation.js';
 const MOUSE_LEFT_BTN_CODE = 0;
 const MOUSE_RIGHT_BTN_CODE = 2;
 
-export class StringCanvasHandler {
+export class Simulation {
   constructor (
     string_length,
     wave_v,
