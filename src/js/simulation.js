@@ -198,7 +198,7 @@ export class Simulation {
       }
     });
 
-    this.stage.on('mousemove touchmove', function (event) {
+    this.stage.on('mousemove', function (event) {
       if (!that.stringIsHeld) {
         return;
       }
