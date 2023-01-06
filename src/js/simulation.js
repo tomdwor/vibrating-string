@@ -74,7 +74,7 @@ export class Simulation {
   }
 
   _holdString (event) {
-    let pointerPos = event.target.getStage().getPointerPosition();
+    let pointerPos = this._getPointerPos(event);
     let pos = {x: pointerPos.x - this.graph_pos_x, y: pointerPos.y - this.graph_pos_y};
     pos = this._correctStringHoldPosToLimits(pos);
     let points = [0, 0, pos.x, pos.y, this.canvas_string_length, 0];
@@ -173,36 +173,45 @@ export class Simulation {
     });
   }
 
+  _getPointerPos (event) {
+    let pointerPos = null;
+    if (['touchstart', 'touchmove', 'touchend'].includes(event.type)) {
+      pointerPos = event.currentTarget.pointerPos;
+    } else {
+      pointerPos = event.target.getStage().getPointerPosition();
+    }
+    return pointerPos;
+  }
+
   _setEvents () {
     let that = this;
 
-    this.stage.on('mousedown', function (event) {
-      if (MOUSE_RIGHT_BTN_CODE === event.evt.button) {
+    this.stage.on('mousedown touchstart contextmenu', function (event) {
+      if (MOUSE_RIGHT_BTN_CODE === event.evt.button || event.type === 'contextmenu') {
         that.stringIsHeld = false;
         that._stopAnim();
         that._resetString();
       }
-      if (MOUSE_LEFT_BTN_CODE === event.evt.button) {
+      if (MOUSE_LEFT_BTN_CODE === event.evt.button || event.type === 'touchstart') {
         that._stopAnim();
         that._holdString(event);
       }
     });
 
-    this.stage.on('mousemove', function (event) {
+    this.stage.on('mousemove touchmove', function (event) {
       if (!that.stringIsHeld) {
         return;
       }
       that._holdString(event);
     });
 
-    this.stage.on('mouseup', function (event) {
+    this.stage.on('mouseup touchend', function (event) {
       if (MOUSE_RIGHT_BTN_CODE === event.evt.button) {
         that.stringIsHeld = false;
         return;
       }
-
       if (that.stringIsHeld) {
-        let pointerPos = event.target.getStage().getPointerPosition();
+        let pointerPos = that._getPointerPos(event);
         that.stringIsHeld = false;
         let pos = {x: pointerPos.x - that.graph_pos_x, y: pointerPos.y - that.graph_pos_y};
         that._animateReleasedString(pos);
