@@ -3,17 +3,28 @@ body {
   padding: 0;
   overflow: hidden;
   background-color: #f0f0f0;
+  min-width: 840px;
+  overflow: auto;
 }
 
-#scene, #settings {
+.container {
   width: 800px;
-  margin: 20px auto;
+  margin: 40px auto;
+}
+
+.container div {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 #scene {
-  margin-top: 40px;
   background-color: #ffffff;
   height: 400px;
+}
+
+#footer {
+  margin-top: 60px;
+  text-align: center;
 }
 
 .slide-container {

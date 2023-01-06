@@ -5,13 +5,24 @@
     <title>Vibrating string</title>
   </head>
   <body>
-    <div id="scene"></div>
-    <div id="settings">
-      <label for="stepsPerFrame">Steps per frame:</label>
-      <span class="slide-container">
-        <input type="range" min="1" max="50" value="1" class="slider" id="stepsPerFrame">
-      </span>
-      <span id="spfVal"></span>
+    <div class="container">
+      <div>
+        <h1>Vibrating string</h1>
+        <p>This is a simulation of a vibrating string without damping.
+          It uses numerical solution of a differential equation of a string.</p>
+        <p>Drag and drop the string to start the animation. Right-click on the canvas to stop the animation.</p>
+      </div>
+      <div id="scene"></div>
+      <div>
+        <label for="stepsPerFrame">Steps per frame:</label>
+        <span class="slide-container">
+          <input type="range" min="1" max="50" value="1" class="slider" id="stepsPerFrame">
+        </span>
+        <span id="spfVal"></span>
+      </div>
+      <div id="footer">
+        <a href="https://tdworakowski.com">tdworakowski.com</a>
+      </div>
     </div>
   </body>
 </html>
