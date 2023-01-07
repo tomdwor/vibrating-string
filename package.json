@@ -13,7 +13,7 @@
     "css-loader": "^6.6.0",
     "html-webpack-plugin": "^5.5.0",
     "konva": "^8.3.2",
-    "node-sass": "^6.0.1",
+    "node-sass": "^8.0.0",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.68.0",
