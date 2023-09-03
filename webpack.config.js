@@ -12,6 +12,10 @@ module.exports = {
     module: {
         rules: [
             {
+               test: /\.(png|jpg|gif|svg|eot|ttf|woff)$/,
+               type: 'asset/resource'
+            },
+            {
                 test: /\.css$/,
                 use: ["style-loader","css-loader"]
             },
@@ -34,6 +38,9 @@ module.exports = {
                 ],
            },
         ]
+    },
+    devServer: {
+        static: './src/assets'
     },
     plugins : [
         new HtmlWebpackPlugin({
