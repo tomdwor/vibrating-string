@@ -51,6 +51,11 @@ export class StringEquation {
     // Calculations for other points
     for (let i = 1; i < (this.pointsNumb - 1); i++) {
       nextE[i] = currentE[i] + Math.pow(this.v, 2) * ((currentU[i+1] - 2*currentU[i] + currentU[i-1]) / Math.pow(this.deltaX, 2)) * this.deltaT;
+
+      // TODO: This should be updated to not use previously calculated nextE without damping
+      // Damping
+      let mi = 0.1;
+      nextE[i] = nextE[i] - 2 * mi * nextE[i] * this.deltaT;
     }
     for (let i = 1; i < (this.pointsNumb - 1); i++) {
       nextU[i] = currentU[i] + nextE[i] * this.deltaT;

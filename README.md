@@ -17,3 +17,6 @@ Read more:
 
 ## References
 - Experiment: [YouTube: Motion of Plucked String](https://youtu.be/_X72on6CSL0)
+- Damping
+  - [Damped string motion partial differential equation](https://math.stackexchange.com/questions/2856487/damped-string-motion-partial-differential-equation)
+  - [String vibration and damping](https://physics.stackexchange.com/questions/355208/string-vibration-and-damping)
