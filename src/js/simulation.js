@@ -4,6 +4,7 @@ import {StringEquation} from './string-equation.js';
 
 const MOUSE_LEFT_BTN_CODE = 0;
 const MOUSE_RIGHT_BTN_CODE = 2;
+const MI = 0.1
 
 export class Simulation {
   constructor (
@@ -145,14 +146,15 @@ export class Simulation {
 
     let canvasPoints = this._initialPointsToCanvasPoints([0, 0, x, y, this.canvas_string_length, 0]);
     let fPoints = this._canvasPointsToFPoints(canvasPoints);
-    let vibratingString = new StringEquation(fPoints, this.wave_v, this.delta_t);
+    let vibratingString = new StringEquation(fPoints, this.wave_v, this.delta_t, MI);
 
     let that = this;
     this.anim = new Konva.Animation(function () {
       let u = null;
       let steps_per_frame = document.getElementById("stepsPerFrame").value;
       for (let i = 0; i < steps_per_frame; i++) {
-        u = vibratingString.getNextU();
+        let dampingEnabled = document.getElementById('damping').checked;
+        u = vibratingString.getNextU(dampingEnabled);
       }
       that.stringLine.points(that._fPointsToCanvasPoints(u));
     }, this.layer);

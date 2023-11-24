@@ -1,5 +1,5 @@
 export class StringEquation {
-  constructor(f, v, deltaT) {
+  constructor(f, v, deltaT, mi) {
     this.f = f;
     this.v = v;
     this.deltaT = deltaT;
@@ -7,6 +7,7 @@ export class StringEquation {
     this.pointsNumb = this.f.length;
     this.deltaX = this.endX / (this.pointsNumb - 1);
     this._initEulerianMesh();
+    this.mi = mi;
   }
 
   _getInitialE () {
@@ -36,7 +37,7 @@ export class StringEquation {
     };
   }
 
-  _calculateNextStep () {
+  _calculateNextStep (dampingEnabled) {
     let currentE = this.eulerianMesh['e'];
     let currentU = this.eulerianMesh['u'];
     let nextE = [];
@@ -52,10 +53,10 @@ export class StringEquation {
     for (let i = 1; i < (this.pointsNumb - 1); i++) {
       nextE[i] = currentE[i] + Math.pow(this.v, 2) * ((currentU[i+1] - 2*currentU[i] + currentU[i-1]) / Math.pow(this.deltaX, 2)) * this.deltaT;
 
-      // TODO: This should be updated to not use previously calculated nextE without damping
-      // Damping
-      let mi = 0.1;
-      nextE[i] = nextE[i] - 2 * mi * nextE[i] * this.deltaT;
+      // Damping - simplified calculation
+      if (dampingEnabled) {
+        nextE[i] = nextE[i] - 2 * this.mi * nextE[i] * this.deltaT;
+      }
     }
     for (let i = 1; i < (this.pointsNumb - 1); i++) {
       nextU[i] = currentU[i] + nextE[i] * this.deltaT;
@@ -67,8 +68,8 @@ export class StringEquation {
     };
   }
 
-  getNextU () {
-    this._calculateNextStep();
+  getNextU (dampingEnabled) {
+    this._calculateNextStep(dampingEnabled);
     return this._makeFunctionPointsFromYValues(this.eulerianMesh['u']);
   }
 }
