@@ -67,3 +67,38 @@ export class StringEquation {
     return this._makeFunctionPointsFromYValues(this.eulerianMesh['u']);
   }
 }
+
+export class DampedStringEquation extends StringEquation {
+  constructor(f, v, deltaT, dampingCoefficient) {
+    super(f, v, deltaT);
+    this.dampingCoefficient = dampingCoefficient;
+  }
+
+  _calculateNextStep() {
+    let currentE = this.eulerianMesh['e'];
+    let currentU = this.eulerianMesh['u'];
+    let nextE = [];
+    let nextU = [];
+
+    // Apply boundary conditions
+    nextE[0] = 0;
+    nextE[this.pointsNumb - 1] = 0;
+    nextU[0] = 0;
+    nextU[this.pointsNumb - 1] = 0;
+
+    // Calculations for other points
+    for (let i = 1; i < (this.pointsNumb - 1); i++) {
+      nextE[i] = (1 - this.dampingCoefficient * this.deltaT) * currentE[i] +
+                 Math.pow(this.v, 2) * ((currentU[i+1] - 2*currentU[i] + currentU[i-1]) / Math.pow(this.deltaX, 2)) * this.deltaT;
+    }
+    for (let i = 1; i < (this.pointsNumb - 1); i++) {
+      nextU[i] = currentU[i] + nextE[i] * this.deltaT;
+    }
+
+    this.eulerianMesh = {
+      'e': nextE,
+      'u': nextU,
+    };
+  }
+}
+

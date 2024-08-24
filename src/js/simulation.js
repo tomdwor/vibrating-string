@@ -1,6 +1,6 @@
 import Konva from 'konva';
 import {two_points_to_line} from './analytic-geometry.js';
-import {StringEquation} from './string-equation.js';
+import {StringEquation, DampedStringEquation} from './string-equation.js';
 
 const MOUSE_LEFT_BTN_CODE = 0;
 const MOUSE_RIGHT_BTN_CODE = 2;
@@ -11,11 +11,13 @@ export class Simulation {
     wave_v,
     delta_t,
     string_points_numb,
+    damping_coefficient
   ) {
     this.string_func_end_x = string_length;
     this.wave_v = wave_v;
     this.delta_t = delta_t;
     this.string_points_numb = string_points_numb;
+    this.damping_coefficient = damping_coefficient;
 
     this.width = document.getElementById('scene').offsetWidth;
     this.height = document.getElementById('scene').offsetHeight;
@@ -34,6 +36,7 @@ export class Simulation {
     });
 
     this.stringIsHeld = false;
+    this.isDamped = false;
     this.anim = null;
     this.layer = new Konva.Layer();
     this.stringLine = this._getInitialStringLine();
@@ -83,8 +86,6 @@ export class Simulation {
   }
 
   _initialPointsToCanvasPoints(initialPoints) {
-    // initialPoints = [0, 0, x, y, stringCanvasHandler.canvas_string_length, 0];
-
     let beginX = initialPoints[0];
     let beginY = initialPoints[1];
     let holdX = initialPoints[2];
@@ -139,13 +140,19 @@ export class Simulation {
   _animateReleasedString(holdingPos) {
     this._stopAnim();
 
-    holdingPos = this._correctStringHoldPosToLimits (holdingPos);
+    holdingPos = this._correctStringHoldPosToLimits(holdingPos);
     let x = holdingPos.x;
     let y = holdingPos.y;
 
     let canvasPoints = this._initialPointsToCanvasPoints([0, 0, x, y, this.canvas_string_length, 0]);
     let fPoints = this._canvasPointsToFPoints(canvasPoints);
-    let vibratingString = new StringEquation(fPoints, this.wave_v, this.delta_t);
+
+    let vibratingString;
+    if (this.isDamped) {
+      vibratingString = new DampedStringEquation(fPoints, this.wave_v, this.delta_t, this.damping_coefficient);
+    } else {
+      vibratingString = new StringEquation(fPoints, this.wave_v, this.delta_t);
+    }
 
     let that = this;
     this.anim = new Konva.Animation(function () {
@@ -244,5 +251,9 @@ export class Simulation {
     this.stage.add(this.layer);
 
     this._setEvents();
+  }
+
+  setDamped(isDamped) {
+    this.isDamped = isDamped;
   }
 }

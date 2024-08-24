@@ -1,28 +1,48 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Vibrating string</title>
-  </head>
-  <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibrating String Simulation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
     <div class="container">
-      <div>
-        <h1>Vibrating string (without damping)</h1>
-        <p>This is a simulation of a vibrating string without damping.
-          It uses numerical solution of a differential equation of a string.</p>
-        <p>Click on any point of the canvas to start the animation. Right-click (long press for mobile) on the canvas to stop the animation.</p>
-      </div>
-      <div id="scene"></div>
-      <div>
-        <label for="stepsPerFrame">Steps per frame:</label>
-        <span class="slide-container">
-          <input type="range" min="1" max="50" value="1" class="slider" id="stepsPerFrame">
-        </span>
-        <span id="spfVal"></span>
-      </div>
-      <div id="footer">
-        <a href="https://tdworakowski.com">tdworakowski.com</a>
-      </div>
+        <header>
+            <h1>Vibrating string (with/without damping)</h1>
+            <p>
+                This is a simulation of a vibrating string with or without damping. It uses
+                numerical solution of a differential equation of a string.
+            </p>
+            <p>
+                Click on any point of the canvas to start the animation. Right-click
+                (long press for mobile) on the canvas to stop the animation.
+            </p>
+        </header>
+
+        <main>
+            <div id="scene"></div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label for="stepsPerFrame">Steps per frame:</label>
+                    <input type="range" id="stepsPerFrame" min="1" max="50" value="10">
+                    <span id="spfVal">10</span>
+                </div>
+
+                <div class="control-group">
+                    <label>
+                        <input type="checkbox" id="dampedCheckbox"> Damped
+                    </label>
+                </div>
+            </div>
+        </main>
+
+        <footer id="footer">
+            <a href="https://tdworakowski.com" target="_blank" rel="noopener noreferrer">tdworakowski.com</a>
+        </footer>
     </div>
-  </body>
+
+    <script src="index.js" type="module"></script>
+</body>
 </html>
