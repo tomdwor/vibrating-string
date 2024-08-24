@@ -10,14 +10,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "css-loader": "^6.6.0",
-    "html-webpack-plugin": "^5.5.0",
-    "konva": "^8.3.2",
-    "node-sass": "^8.0.0",
-    "sass-loader": "^12.4.0",
-    "style-loader": "^3.3.1",
-    "webpack": "^5.68.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "css-loader": "^6.8.1",
+    "html-webpack-plugin": "^5.5.3",
+    "konva": "^9.2.2",
+    "sass": "^1.69.0",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
   }
 }
